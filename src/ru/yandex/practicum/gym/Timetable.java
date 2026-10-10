@@ -24,17 +24,21 @@ public class Timetable {
         sessionsAtTime.add(trainingSession);
     }
 
-    public Collection<List<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+    public List<TrainingSession> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+        List<TrainingSession> result = new ArrayList<>();
         TreeMap<TimeOfDay, List<TrainingSession>> daySchedule = timetable.get(dayOfWeek);
 
         if (daySchedule == null) {
-            return Collections.emptyList();
+            return result;
         }
 
-        return daySchedule.values();
+        for (TimeOfDay time : daySchedule.navigableKeySet()) {
+            result.addAll(daySchedule.get(time));
+        }
+        return result;
     }
 
-    public Collection<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
+    public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
         TreeMap<TimeOfDay, List<TrainingSession>> daySchedule = timetable.get(dayOfWeek);
 
         if (daySchedule == null) {
@@ -49,7 +53,7 @@ public class Timetable {
         return sessionsAtTime;
     }
 
-    public Collection<CounterOfTrainings> getCountByCoaches() {
+    public List<CounterOfTrainings> getCountByCoaches() {
         Map<Coach, Integer> counts = new HashMap<>();
 
         for (TreeMap<TimeOfDay, List<TrainingSession>> daySchedule : timetable.values()) {
