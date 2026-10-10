@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Timetable {
 
-    private final  Map<DayOfWeek, TreeMap<TimeOfDay, List<TrainingSession>>> timetable;
+    private final Map<DayOfWeek, TreeMap<TimeOfDay, List<TrainingSession>>> timetable;
 
     public Timetable() {
         this.timetable = new EnumMap<>(DayOfWeek.class);
